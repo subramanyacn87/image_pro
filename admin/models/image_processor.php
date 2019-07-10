@@ -31,6 +31,7 @@ class Images {
             $this->processImages($_FILES['fileToUpload']);
             $message = "All images uploaded Successfully";
         }
+
         header("Location: http://localhost/image_pro/index.php?message=$message");
     }
 
@@ -72,7 +73,6 @@ class Images {
                   VALUES ('$group_id', '$NewImageName640', '$original_name', '$ImageType', '$tags', '640x480x', current_timestamp()),
                   ('$group_id', '$NewImageName1280', '$original_name', '$ImageType', '$tags', '1280x720x', current_timestamp())";
             $db->insertQuerty($query_string,'insert');
-
             unlink($original_image_name);
         }
     }
@@ -113,8 +113,14 @@ class Images {
     }
 
     public function deleteImages($id){
-        $query_string ="DELETE from image where image_group_id = $id";
+        $query_string ="SELECT * FROM image WHERE image_group_id = $id";
+        $details = $this->db->getResult($query_string);
+        foreach($details as $det){
+            unlink("../images/".$det['stored_image_name']);
+        }
+        $query_string ="DELETE FROM image WHERE image_group_id = $id";
         $this->db->insertQuerty($query_string,'insert');
+
         header("Location: http://localhost/image_pro/view_images.php?message=Image Deleted Successfully");
     }
 }

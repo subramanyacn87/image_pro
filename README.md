@@ -9,7 +9,7 @@
   > SQL verison >= 4.9
 
 * Database configuration:
-  1. Download the sql file which is present in the repo named: dbstructure.sql
+  1. Download the sql file which is present in the repo named: image_pro.sql
   2. export the DB to your mysql server which will create the database structure
   3. update the DB credentails in the file path: admin/config/dbConnect.php
   
