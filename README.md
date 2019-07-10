@@ -14,3 +14,9 @@
   
 * Limitation:
   > Files which are supported for upload are  JPEG, PNG and GIF and any other files uploaded will result in the failure of the upload and message will be showned.
+
+# Input and output Details:
+* Input:
+    Upload the images files with the format of JPEG, Png and Gif
+* Output:
+    In view images you will be able to see the 2 images with the resolution 640px X 480px and 1280px X 720px 
