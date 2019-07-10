@@ -2,24 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53f15baa-58ff-420a-b32e-aeb02d2595dd" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/image_pro.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/1280px_720px__1562776491_205607.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/1280px_720px__1562777456_205615.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/1280px_720px__1562777456_205619.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/1280px_720px__1562777694_205615.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/1280px_720px__1562777822_205615.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/1280px_720px__1562777838_205607.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/640px_480px__1562776491_205607.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/640px_480px__1562777455_205615.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/640px_480px__1562777456_205619.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/640px_480px__1562777694_205615.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/640px_480px__1562777822_205615.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/images/640px_480px__1562777837_205607.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/models/image_processor.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/models/image_processor.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view_images.php" beforeDir="false" afterPath="$PROJECT_DIR$/view_images.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -57,16 +41,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="17">
-              <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+              <caret line="1" column="13" lean-forward="true" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
@@ -135,8 +119,8 @@
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/admin/models/image_processor.php" />
         <option value="$PROJECT_DIR$/view_images.php" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -221,12 +205,12 @@
       <updated>1562678873159</updated>
       <workItem from="1562678876301" duration="37000" />
       <workItem from="1562679051108" duration="5006000" />
-      <workItem from="1562732562036" duration="33990000" />
+      <workItem from="1562732562036" duration="34628000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39033000" />
+    <option name="totallyTimeSpent" value="39671000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -373,13 +357,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider editor-type-id="text-editor">
         <state>
@@ -392,6 +369,13 @@
             <caret line="11" column="72" selection-start-line="11" selection-start-column="72" selection-end-line="11" selection-end-column="72" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="13" lean-forward="true" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
         </state>
       </provider>
     </entry>
