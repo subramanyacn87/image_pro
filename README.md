@@ -1,5 +1,6 @@
 # Project Description:
-  This project allows you to upload the images like JPEG, PNG and GIF to the portal and get the image size 640px X 480px and 1280px X 720px resolution images. The images will be stored in the server and you can view all the images you have uploaded. 
+  This project allows you to upload the images like JPEG, PNG and GIF to the portal and get the image size 640px X 480px and 1280px X 720px resolution images. The images will be stored in the server and you can view all the images you have uploaded. If the images are no longer needed you can delete those images.
+  You can also tag each image in different category which can be used later for categorizing the images.
 
 # Configuration Details:
 
