@@ -24,11 +24,22 @@
                         <strong >Welcome to Image upload portal</strong>
                     </div>
                     <form action="admin/models/image_processor.php" class="form-horizontal" method="post" enctype="multipart/form-data">
-                        <div class="form-group col-md-5 col-xs-12">
+                        <div class="form-group ">
                             <label for="email">Select Images to Upload:</label>
                             <input type="file" class="form-control" name="fileToUpload[]" required multiple>
                         </div>
                         <input type="hidden" name="images" value="yes">
+                        <div class="form-group ">
+                            <div class="radio">
+                                <label><input type="radio" name="tags" value="nature" required>Nature</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="tags" value="festival" required>Festival</label>
+                            </div>
+                            <div class="radio disabled">
+                                <label><input type="radio" name="tags" value="sports" required>Sports</label>
+                            </div>
+                        </div>
                         <div class="form-group col-md-12 col-xs-12">
                             <button type="submit" class="btn btn-success">Upload Images</button>
                         </div>

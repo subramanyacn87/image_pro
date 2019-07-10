@@ -33,18 +33,38 @@
                     <a href="index.php" class="btn btn-primary">Upload more images</a>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <?php
+                    if(isset($_GET['message'])){
+                        ?>
+                        <div class="alert alert-success">
+                            <strong><?php echo $_GET['message']?></strong>
+                        </div>
+                        <?php
+                    } ?>
+                </div>
+            </div>
             <?php
             for($i=0;$i < count($output);$i=$i+2){
                 ?>
+                <div class="row" style="margin-top: 10px">
+                    <div class="col-md-7 col-xs-12">
+                        <a href="admin/models/image_processor.php?target=delete&id=<?php echo $output[$i]['image_group_id']?>" class="btn btn-primary">
+                            Delete following Images</a>
+                    </div>
+                </div>
                 <div class="row p-30">
                     <div class="col-md-7 col-xs-12">
-                        <?php echo "Image original Name: ".$output[$i]['original_image_name']."<br>1280px X 720Px Image:<br>";?>
+                        <?php echo "Image original Name: ".$output[$i]['original_image_name']."<br>1280px X 720Px Image:";?>
+                        <span class="tag label label-info"> #<?php echo $output[$i]['tags'];?><span data-role="remove"></span></span>
                         <img src="admin/images/<?php echo $output[$i]['stored_image_name']?>" alt="Cinque Terre" class="img-responsive" />
                     </div>
 
 
                     <div class="col-md-5 col-xs-12">
-                        <?php echo "<br>640px X 480Px Image:<br>"; ?>
+                        <?php echo "<br>640px X 480Px Image:"; ?>
+                        <span class="tag label label-info"> #<?php echo $output[$i]['tags'];?><span data-role="remove"></span></span>
                         <img src="admin/images/<?php echo $output[$i+1]['stored_image_name']?>" alt="Cinque Terre" class="img-responsive" />
                     </div>
                 </div>

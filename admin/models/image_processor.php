@@ -1,13 +1,21 @@
 <?php
 include_once "../config/dbConnect.php";
 $images = new Images();
-if(isset($_POST['images'])){
+if(isset($_REQUEST['images'])) {
     $images->getImages();
+}elseif(isset($_REQUEST['target'])) {
+    if($_REQUEST['target'] == 'delete')
+        $images->deleteImages($_REQUEST['id']);
 }
 
 class Images {
+
+    function __construct()
+    {
+        $this->db = new DbConnection();
+    }
+
     public function getImages() {
-        echo "<pre>";
         $unsuported_file_count = 0;
         $message = '';
         foreach ( $_FILES['fileToUpload']['name'] as $i => $name ) {
@@ -28,7 +36,8 @@ class Images {
 
     protected function processImages($images) {
         $db = new DbConnection();
-        $output = $db->getResult("SELECT * FROM image");
+        $output = $this->db->getResult("SELECT * FROM image");
+        $tags = $_REQUEST['tags'];
 
         //print_r($output);exit;
         $DestinationDirectory	= '../images/'; //Upload Directory ends with / (slash)
@@ -37,88 +46,76 @@ class Images {
             $ImageName 		= str_replace(' ','-',strtolower($images['name'][$i]));
             $TempSrc	 	= $images['tmp_name'][$i]; // Tmp name of image file stored in PHP tmp folder
             $ImageType	 	= $images['type'][$i]; //Obtain file type, returns "image/png", image/jpeg, text/plain etc.
-
-            //Let's use $ImageType variable to check wheather uploaded file is supported.
-            //We use PHP SWITCH statement to check valid image format, PHP SWITCH is similar to IF/ELSE statements
-            //suitable if we want to compare the a variable with many different values
-            switch(strtolower($ImageType))
-            {
-                case 'image/png':
-                    $CreatedImage =  imagecreatefrompng($images['tmp_name'][$i]);
-                    break;
-                case 'image/gif':
-                    $CreatedImage =  imagecreatefromgif($images['tmp_name'][$i]);
-                    break;
-                case 'image/jpeg':
-                case 'image/pjpeg':
-                    $CreatedImage = imagecreatefromjpeg($images['tmp_name'][$i]);
-                    break;
-                default:
-                    die('Unsupported File!'); //output error and exit
-            }
+            $original_image_name = $DestinationDirectory.time().'_'.$ImageName;
+            move_uploaded_file($TempSrc, "$original_image_name");
 
             //Getting Height and width of the current image
-            list($CurWidth,$CurHeight)=getimagesize($TempSrc);
+            list($CurWidth,$CurHeight)=getimagesize($original_image_name);
+
+            $query_string = "SELECT MAX(id) as id from image";
+            $last_id = $this->db->getResult($query_string);
+            $group_id = $last_id[0]['id'] + 1;
 
             //Construct a new image name (with random number added) for our new image.
             //for 640x480x
             $original_name = $images['name'][$i];
             $NewImageName640 = "640px_480px_"."_".time()."_".$images['name'][$i];
             $DestRandImageName640 = $DestinationDirectory.$NewImageName640; //Name for Big Image
-            $this->resizeImage($CurWidth,$CurHeight,640,480,$DestRandImageName640,$CreatedImage,$Quality,$ImageType);
-            $query_string = "SELECT MAX(id) as id from image";
-            $last_id = $db->getResult($query_string);
-            $group_id = $last_id[0]['id'] + 1;
+            $this->resizeImage($CurWidth,$CurHeight,640,480,$original_image_name,$DestRandImageName640,$Quality,$ImageType);
 
             //for 1280x720x
             $NewImageName1280 = "1280px_720px_"."_".time()."_".$images['name'][$i];
             $DestRandImageName1280 = $DestinationDirectory.$NewImageName1280; //Name for Big Image
-            $this->resizeImage($CurWidth,$CurHeight,1280,720,$DestRandImageName1280,$CreatedImage,$Quality,$ImageType);
+            $this->resizeImage($CurWidth,$CurHeight,1280,720,$original_image_name,$DestRandImageName1280,$Quality,$ImageType);
 
-            $query_string ="INSERT INTO `image` (`image_group_id`, `stored_image_name`, `original_image_name`, `ext`, `resolution`, `created_at`) 
-                  VALUES ('$group_id', '$NewImageName640', '$original_name', '$ImageType', '640x480x', current_timestamp()),
-                  ('$group_id', '$NewImageName1280', '$original_name', '$ImageType', '1280x720x', current_timestamp())";
+            $query_string ="INSERT INTO `image` (`image_group_id`, `stored_image_name`, `original_image_name`, `ext`, `tags`, `resolution`, `created_at`) 
+                  VALUES ('$group_id', '$NewImageName640', '$original_name', '$ImageType', '$tags', '640x480x', current_timestamp()),
+                  ('$group_id', '$NewImageName1280', '$original_name', '$ImageType', '$tags', '1280x720x', current_timestamp())";
             $db->insertQuerty($query_string,'insert');
+
+            unlink($original_image_name);
         }
     }
 
     // This function will proportionally resize image
-    protected function resizeImage($CurWidth,$CurHeight,$width,$height,$DestFolder,$SrcImage,$Quality,$ImageType) {
+    protected function resizeImage($CurWidth,$CurHeight,$width,$height,$SrcImage,$DestFolder,$Quality,$ImageType) {
         //Check Image size is not 0
         if($CurWidth <= 0 || $CurHeight <= 0){
             return false;
         }
-
+        $scale_ratio = $CurWidth / $CurHeight;
         //Construct a proportional size of new image
-        $NewWidth  			= $width;
-        $NewHeight 			= $height;
+        if (($width / $height) > $scale_ratio) {
+            $width = $height * $scale_ratio;
+        } else {
+            $height = $width / $scale_ratio;
+        }
 
-        if($CurWidth < $NewWidth || $CurHeight < $NewHeight) {
-            $NewWidth = $CurWidth;
-            $NewHeight = $CurHeight;
-        }
-        $NewCanves 	= imagecreatetruecolor($NewWidth, $NewHeight);
+        $img = "";
         // Resize Image
-        if(imagecopyresampled($NewCanves, $SrcImage,0, 0, 0, 0, $NewWidth, $NewHeight, $CurWidth, $CurHeight)) {
-            switch(strtolower($ImageType)) {
-                case 'image/png':
-                    imagepng($NewCanves,$DestFolder);
-                    break;
-                case 'image/gif':
-                    imagegif($NewCanves,$DestFolder);
-                    break;
-                case 'image/jpeg':
-                case 'image/pjpeg':
-                    imagejpeg($NewCanves,$DestFolder,$Quality);
-                    break;
-                default:
-                    return false;
-            }
-            //Destroy image, frees up memory
-            if(is_resource($NewCanves)) {
-                imagedestroy($NewCanves);
-            }
+        switch(strtolower($ImageType)) {
+            case 'image/png':
+                $img = imagecreatefrompng($SrcImage);
+                break;
+            case 'image/gif':
+                $img = imagecreatefromgif($SrcImage);
+                break;
+            case 'image/jpeg':
+            case 'image/pjpeg':
+            $img = imagecreatefromjpeg($SrcImage);
+                break;
+            default:
+                return false;
         }
+        $NewCanves 	= imagecreatetruecolor($width, $height);
+        imagecopyresampled($NewCanves, $img,0, 0, 0, 0, $width, $height, $CurWidth, $CurHeight);
+        imagejpeg($NewCanves, $DestFolder, $Quality);
+    }
+
+    public function deleteImages($id){
+        $query_string ="DELETE from image where image_group_id = $id";
+        $this->db->insertQuerty($query_string,'insert');
+        header("Location: http://localhost/image_pro/view_images.php?message=Image Deleted Successfully");
     }
 }
 ?>
